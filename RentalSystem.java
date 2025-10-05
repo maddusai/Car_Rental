@@ -3,7 +3,7 @@ import java.util.List;
 
 public class RentalSystem {
     private List<Vehicle> availableVehicles;
-    private List<Vehicle> rentedVehicles;
+    private List<RentedVehicle> rentedVehicles;
 
     public RentalSystem() {
         availableVehicles = new ArrayList<>();
@@ -14,43 +14,52 @@ public class RentalSystem {
         availableVehicles.add(vehicle);
     }
 
+    // Return list of currently available vehicles
     public List<Vehicle> getAvailableVehicles() {
-        return availableVehicles;
+        List<Vehicle> available = new ArrayList<>();
+        for (Vehicle v : availableVehicles) {
+            if (v.isAvailable()) {
+                available.add(v);
+            }
+        }
+        return available;
     }
 
-    public List<Vehicle> getRentedVehicles() {
-        return rentedVehicles;
+    public void showAvailableVehicles() {
+        System.out.println("\nAvailable Vehicles:");
+        for (Vehicle v : availableVehicles) {
+            if (v.isAvailable())
+                System.out.println(v.getDetails());
+        }
     }
 
-    public void rentVehicle(Vehicle vehicle) {
-        if (availableVehicles.contains(vehicle)) {
-            availableVehicles.remove(vehicle);
-            rentedVehicles.add(vehicle);
+    public void showRentedVehicles() {
+        System.out.println("\nRented Vehicles:");
+        for (RentedVehicle rv : rentedVehicles) {
+            System.out.println(rv.getReceipt());
+        }
+    }
+
+    public void rentVehicle(Vehicle vehicle, Customer customer, int days) {
+        if (vehicle.isAvailable()) {
+            RentedVehicle rv = new RentedVehicle(vehicle, customer, days);
+            rentedVehicles.add(rv);
+            System.out.println("\nVehicle rented: " + rv.getReceipt());
+        } else {
+            System.out.println("Vehicle is already rented.");
         }
     }
 
     public void returnVehicle(Vehicle vehicle) {
-        if (rentedVehicles.contains(vehicle)) {
-            rentedVehicles.remove(vehicle);
-            availableVehicles.add(vehicle);
+        RentedVehicle toRemove = null;
+        for (RentedVehicle rv : rentedVehicles) {
+            if (rv.getVehicle() == vehicle) {
+                vehicle.setAvailable(true);
+                toRemove = rv;
+                System.out.println("\nVehicle returned: " + vehicle.getDetails());
+                break;
+            }
         }
-    }
-
-    public void displayRentalInfo() {
-        System.out.println("Available Vehicles:");
-        for (Vehicle v : availableVehicles) {
-            v.displayInfo();
-            System.out.println();
-        }
-
-        System.out.println("Rented Vehicles:");
-        for (Vehicle v : rentedVehicles) {
-            v.displayInfo();
-            System.out.println();
-        }
-    }
-
-    public double calculateRentalCost(Vehicle vehicle, int rentalDuration) {
-        return vehicle.getDailyRentalRate() * rentalDuration;
+        if (toRemove != null) rentedVehicles.remove(toRemove);
     }
 }
