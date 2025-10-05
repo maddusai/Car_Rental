@@ -1,20 +1,13 @@
 public class Truck extends Vehicle {
-    private int loadCapacity;
-    private boolean isFourWheelDrive;
-    private String cargoType;
+    private double loadCapacity;
 
-    public Truck(String make, String model, int year, double rentalRate, int loadCapacity, boolean isFourWheelDrive, String cargoType) {
-        super(make, model, year, rentalRate);
+    public Truck(String brand, String model, int year, double pricePerDay, double loadCapacity) {
+        super(brand, model, year, pricePerDay);
         this.loadCapacity = loadCapacity;
-        this.isFourWheelDrive = isFourWheelDrive;
-        this.cargoType = cargoType;
     }
 
     @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("Load Capacity: " + loadCapacity);
-        System.out.println("Four Wheel Drive: " + isFourWheelDrive);
-        System.out.println("Cargo Type: " + cargoType);
+    public String getDetails() {
+        return super.getDetails() + ", Load: " + loadCapacity + " tons";
     }
 }
