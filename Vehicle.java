@@ -1,51 +1,26 @@
 public class Vehicle {
-    private String make;
-    private String model;
-    private int year;
-    private double dailyRentalRate;
-    private double hourlyRentalRate;
+    protected String brand;
+    protected String model;
+    protected int year;
+    protected double pricePerDay;
+    protected boolean available;
 
-    public Vehicle(String make, String model, int year, double dailyRentalRate) {
-        this.make = make;
+    public Vehicle(String brand, String model, int year, double pricePerDay) {
+        this.brand = brand;
         this.model = model;
         this.year = year;
-        this.dailyRentalRate = dailyRentalRate;
-        this.hourlyRentalRate = dailyRentalRate / 24;
+        this.pricePerDay = pricePerDay;
+        this.available = true;
     }
 
-    public Vehicle(String make, String model, int year, double dailyRentalRate, double hourlyRentalRate) {
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.dailyRentalRate = dailyRentalRate;
-        this.hourlyRentalRate = hourlyRentalRate;
-    }
+    public String getBrand() { return brand; }
+    public String getModel() { return model; }
+    public int getYear() { return year; }
+    public double getPricePerDay() { return pricePerDay; }
+    public boolean isAvailable() { return available; }
+    public void setAvailable(boolean available) { this.available = available; }
 
-    public void displayInfo() {
-        System.out.println("Make: " + make);
-        System.out.println("Model: " + model);
-        System.out.println("Year: " + year);
-        System.out.println("Daily Rental Rate: $" + dailyRentalRate + " per day");
-        System.out.println("Hourly Rental Rate: $" + hourlyRentalRate + " per hour");
-    }
-
-    public double getDailyRentalRate() {
-        return dailyRentalRate;
-    }
-
-    public double getHourlyRentalRate() {
-        return hourlyRentalRate;
-    }
-
-    public String getMake() {
-        return make;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public int getYear() {
-        return year;
+    public String getDetails() {
+        return brand + " " + model + " (" + year + ") - $" + pricePerDay + "/day";
     }
 }
