@@ -1,14 +1,13 @@
 public class Motorbike extends Vehicle {
-    private String bikeType;
+    private int engineCC;
 
-    public Motorbike(String make, String model, int year, double rentalRate, String bikeType) {
-        super(make, model, year, rentalRate, rentalRate);
-        this.bikeType = bikeType;
+    public Motorbike(String brand, String model, int year, double pricePerDay, int engineCC) {
+        super(brand, model, year, pricePerDay);
+        this.engineCC = engineCC;
     }
 
     @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("Bike Type: " + bikeType);
+    public String getDetails() {
+        return super.getDetails() + ", Engine: " + engineCC + "cc";
     }
 }
